@@ -49,7 +49,7 @@ version = {attr = "SuomiGeoData.__version__"}
 
 
 [tool.pytest.ini_options]
-addopts = "-rA -Werror --cov=SuomiGeoData"
+addopts = "-rA -Werror --cov=SuomiGeoData --cov-report=html:cov_SuomiGeoData --cov-report=term -s"
 testpaths = [
     "tests"
 ]
@@ -57,8 +57,7 @@ testpaths = [
 
 [tool.mypy]
 files = [
-    "SuomiGeoData",
-    "docs"
+    "SuomiGeoData"
 ]
 ignore_missing_imports = true
 strict = true
