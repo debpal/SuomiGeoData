@@ -36,6 +36,7 @@ keywords = [
 
 [project.urls]
 "Homepage" = "https://github.com/debpal/SuomiGeoData"
+"Documentation" = "http://suomigeodata.readthedocs.io/"
 
 
 [tool.setuptools.package-data]

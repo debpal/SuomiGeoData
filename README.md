@@ -30,6 +30,16 @@ A brief example of how to start:
 
 ## Documentation
 
+For detailed information, see the [documentation](http://suomigeodata.readthedocs.io/).
+
 
 ## Toolkit
+
+| <big>Status</big> | <big>Description</big> |
+| --- | --- |
+| **PyPI**| ![PyPI - Version](https://img.shields.io/pypi/v/SuomiGeoData) ![PyPI - Status](https://img.shields.io/pypi/status/SuomiGeoData) ![PyPI - Wheel](https://img.shields.io/pypi/wheel/SuomiGeoData) |
+| **GitHub** | ![GitHub last commit](https://img.shields.io/github/last-commit/debpal/SuomiGeoData) ![GitHub repo size](https://img.shields.io/github/repo-size/debpal/SuomiGeoData) |
+| **Codecov** |  |
+| **Read**_the_**Docs** | [![Documentation Status](https://readthedocs.org/projects/suomigeodata/badge/?version=latest)](https://suomigeodata.readthedocs.io/en/latest/?badge=latest) |
+| **License** | ![PyPI - License](https://img.shields.io/pypi/l/SuomiGeoData) |
 
