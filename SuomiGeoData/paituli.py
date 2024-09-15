@@ -91,6 +91,27 @@ class Paituli:
 
         return output
 
+    def is_valid_label_dem(
+        self,
+        label: str
+    ) -> bool:
+
+        '''
+        Returns whether the label exists in the DEM index map.
+
+        Parameters
+        ----------
+        label : str
+            Name of the label.
+
+        Returns
+        -------
+        bool
+            True if the label exists, False otherwise.
+        '''
+
+        return label in self.dem_labels
+
     @property
     def tdb_labels(
         self
