@@ -20,9 +20,18 @@ class Paituli:
     ) -> None:
 
         '''
-        Initializes the class by loading the topographical index map.
+        Initializes the class by loading the GeoDataFrame of index maps for
+        DEM (raster data) and topographical database (vector data).
         '''
 
+        # DEM index map
+        self.indexmap_dem = geopandas.read_file(
+            os.path.join(
+                os.path.dirname(__file__), 'data', 'nls_dem_index.shp'
+            )
+        )
+
+        # topograhical database index map
         self.indexmap_tdb = geopandas.read_file(
             os.path.join(
                 os.path.dirname(__file__), 'data', 'nls_td_index.shp'
@@ -66,6 +75,19 @@ class Paituli:
             )
 
         output = os.path.exists(file_path)
+
+        return output
+
+    @property
+    def dem_labels(
+        self
+    ) -> list[str]:
+
+        '''
+        Returns the list of labels from the DEM index map.
+        '''
+
+        output = list(self.indexmap_dem['label'])
 
         return output
 
