@@ -49,12 +49,8 @@ SuomiGeoData = [
 version = {attr = "SuomiGeoData.__version__"}
 
 
-[tool.setuptools.packages.find]
-exclude = ["cov_SuomiGeoData"]
-
-
 [tool.pytest.ini_options]
-addopts = "-rA -Werror --cov=SuomiGeoData --cov-report=html:cov_SuomiGeoData --cov-report=term -s"
+addopts = "-rA -Werror --cov=SuomiGeoData -s"
 testpaths = [
     "tests"
 ]
