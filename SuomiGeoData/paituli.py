@@ -38,14 +38,14 @@ class Paituli:
             )
         )
 
-    def save_indexmap_tdb(
+    def save_indexmap_dem(
         self,
         file_path: str,
         **kwargs: typing.Any
     ) -> bool:
 
         '''
-        Saves the GeoDataFrame of the topographic database
+        Saves the GeoDataFrame of the DEM
         index map to the specified file path.
 
         Parameters
@@ -65,7 +65,7 @@ class Paituli:
 
         validity = Core().is_valid_write_shape_driver(file_path)
         if validity is True:
-            self.indexmap_tdb.to_file(
+            self.indexmap_dem.to_file(
                 file_path,
                 **kwargs
             )
@@ -111,6 +111,46 @@ class Paituli:
         '''
 
         return label in self.dem_labels
+
+    def save_indexmap_tdb(
+        self,
+        file_path: str,
+        **kwargs: typing.Any
+    ) -> bool:
+
+        '''
+        Saves the GeoDataFrame of the topographic database
+        index map to the specified file path.
+
+        Parameters
+        ----------
+        file_path : str
+            File path to save the GeoDataFrame.
+
+        **kwargs : optional
+            Additional keyword arguments for the
+            :meth:`geopandas.GeoDataFrame.to_file` function.
+
+        Returns
+        -------
+        bool
+            True if the file exists at the specified path, False otherwise.
+        '''
+
+        validity = Core().is_valid_write_shape_driver(file_path)
+        if validity is True:
+            self.indexmap_tdb.to_file(
+                file_path,
+                **kwargs
+            )
+        else:
+            raise Exception(
+                'Could not OGR format driver from the file path.'
+            )
+
+        output = os.path.exists(file_path)
+
+        return output
 
     @property
     def tdb_labels(

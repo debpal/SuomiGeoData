@@ -22,7 +22,7 @@ classifiers = [
 	"License :: OSI Approved :: MIT License",
 	"Operating System :: OS Independent",
 	"Intended Audience :: Education",
-    "Intended Audience :: Science/Research",
+        "Intended Audience :: Science/Research",
 	"Topic :: Scientific/Engineering :: GIS",
 	"Topic :: Scientific/Engineering :: Hydrology"
 ]
@@ -47,6 +47,10 @@ SuomiGeoData = [
 
 [tool.setuptools.dynamic]
 version = {attr = "SuomiGeoData.__version__"}
+
+
+[tool.setuptools.packages.find]
+exclude = ["cov_SuomiGeoData"]
 
 
 [tool.pytest.ini_options]
