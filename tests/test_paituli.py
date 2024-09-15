@@ -28,6 +28,15 @@ def test_save_indexmap_tdb(
     with pytest.raises(Exception) as exc_info:
         class_instance.save_indexmap_tdb('invalid_file_extension.sh')
     assert exc_info.value.args[0] == 'Could not OGR format driver from the file path.'
+    
+
+def test_is_valid_label_dem(
+    class_instance
+):
+
+    # pass test
+    assert class_instance.is_valid_label_dem('K3244G') is True
+    assert class_instance.is_valid_label_dem('invalid_label') is False
 
 
 def test_is_valid_label_tdb(
