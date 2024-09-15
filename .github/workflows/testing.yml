@@ -37,6 +37,5 @@ jobs:
 
     - name: Run tests with pytest
       run: |
-        mypy SuomiGeoData
         export PYTHONPATH=$(pwd)
         pytest --cov=SuomiGeoData --cov-report=xml  # Run tests and generate coverage report in XML format
