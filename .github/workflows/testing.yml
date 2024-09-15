@@ -6,13 +6,11 @@ on:
       - main  # Your branch name
     paths:
       - '**/*.py'  # Trigger only for changes in Python files
-      - '**/*.yml'  # Trigger for changes in YAML files
   pull_request:
     branches:
       - main  # Your branch name
     paths:
       - '**/*.py'  # Trigger for changes in Python files
-      - '**/*.yml'  # Trigger for changes in YAML files
 
 jobs:
   build:

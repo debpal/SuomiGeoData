@@ -55,3 +55,10 @@ def test_is_valid_label(
     # pass test for topographical database
     assert class_instance.is_valid_label_tdb('K2344R') is True
     assert class_instance.is_valid_label_tdb('invalid_label') is False
+
+
+def test_check(
+    class_instance
+):
+
+    assert 1 + 1 == 2
