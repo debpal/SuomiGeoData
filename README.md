@@ -1,6 +1,5 @@
 # SuomiGeoData
 
-## What is SuomiGeoData?
 SuomiGeoData is a Python package whose concept originated on September 11, 2024. It is designed to simplify the process of downloading and extracting geospatial data from Suomi, that is Finland. The package offers the following features:
 
 
