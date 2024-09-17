@@ -1,10 +1,19 @@
 # SuomiGeoData
 
 ## What is SuomiGeoData?
-SuomiGeoData is a Python package designed to simplify the process of downloading and extracting geospatial data from Suomi, that is Finland. The features of the package include:
+SuomiGeoData is a Python package whose concept originated on September 11, 2024. It is designed to simplify the process of downloading and extracting geospatial data from Suomi, that is Finland. The package offers the following features:
 
-- **[Paituli](https://paituli.csc.fi/download.html)** 
-  - Accessing the topographic database index map.
+
+* [Paituli](https://paituli.csc.fi/download.html) website
+
+    - Provides access to vector format index maps for downloading DEM and the topographic database.
+    - Downloads DEM as raster files and the topographic database as shapefiles based on label names from the index maps.
+    
+    
+## Roadmap
+
+* Enable downloading DEM for a specified area using a shapefile.
+* Enable downloading the topographic database for a specified area using a shapefile.
 
 
 ## Easy Installation
@@ -23,9 +32,16 @@ A brief example of how to start:
 >>> paituli = SuomiGeoData.Paituli()
 
 # get the topographic database index map
->>> im_tb = paituli.indexmap_tdb
->>> im_tb.shape
-(3132, 3)
+>>> paituli.indexmap_tdb.head()
+
+     label                                               path	                                         geometry
+    -------------------------------------------------------------------------------------------------------------
+0	K2344R	mml/maastotietokanta/2022/shp/K2/K23/K2344R.sh...	POLYGON ((104000 6606000, 104000 6618000, 1160...
+1	K2334R	mml/maastotietokanta/2022/shp/K2/K23/K2334R.sh...	POLYGON ((104000 6582000, 104000 6594000, 1160...
+2	K2343R	mml/maastotietokanta/2022/shp/K2/K23/K2343R.sh...	POLYGON ((104000 6594000, 104000 6606000, 1160...
+3	K2443L	mml/maastotietokanta/2022/shp/K2/K24/K2443L.sh...	POLYGON ((92000 6642000, 92000 6654000, 104000...
+4	K2443R	mml/maastotietokanta/2022/shp/K2/K24/K2443R.sh...	POLYGON ((104000 6642000, 104000 6654000, 1160...
+...
 ```
 
 ## Documentation

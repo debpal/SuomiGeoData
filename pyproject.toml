@@ -10,19 +10,20 @@ authors = [
   { name="Debasish Pal", email="bestdebasish@gmail.com" },
 ]
 dependencies = [
-    "geopandas>=1.0.1"
+    "geopandas>=1.0.1",
+    "requests>=2.32.3"
 ]
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
-	"Development Status :: 1 - Planning",
+	"Development Status :: 2 - Pre-Alpha",
 	"Programming Language :: Python :: 3.10",
 	"Programming Language :: Python :: 3.11",
 	"Programming Language :: Python :: 3.12",
 	"License :: OSI Approved :: MIT License",
 	"Operating System :: OS Independent",
 	"Intended Audience :: Education",
-        "Intended Audience :: Science/Research",
+    "Intended Audience :: Science/Research",
 	"Topic :: Scientific/Engineering :: GIS",
 	"Topic :: Scientific/Engineering :: Hydrology"
 ]

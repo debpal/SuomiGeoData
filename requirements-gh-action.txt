@@ -1,5 +1,4 @@
-sphinx_rtd_theme
+pytest
+pytest-cov
 geopandas>=1.0.1
 requests>=2.32.3
-
-

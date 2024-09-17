@@ -12,6 +12,7 @@ Welcome to SuomiGeoData's documentation!
    
    introduction
    installation
+   quickstart
    modules
    changelog
 

@@ -57,8 +57,36 @@ def test_is_valid_label(
     assert class_instance.is_valid_label_tdb('invalid_label') is False
 
 
-def test_check(
+def test_download_by_labels(
     class_instance
 ):
 
-    assert 1 + 1 == 2
+    # test for downloading DEM
+    with tempfile.TemporaryDirectory() as dem_dir:
+        # download test
+        class_instance.dem_download_by_labels(['X4344A'], dem_dir) is True
+        # download test with customized HTTP headers
+        class_instance.dem_download_by_labels(['X4344A'], dem_dir, http_headers={'Host': 'www.nic.funet.fi'}) is True
+        # error test for invalid label
+        with pytest.raises(Exception) as exc_info:
+            class_instance.dem_download_by_labels(['ABCDE'], dem_dir)
+        assert exc_info.value.args[0] == 'The label "ABCDE" does not exist in the index map.'
+    # errot test for invalid directory
+    with pytest.raises(Exception) as exc_info:
+        class_instance.dem_download_by_labels(['X4344A'], dem_dir)
+    assert exc_info.value.args[0] == f'The folder path "{dem_dir}" is not a valid directory.'
+
+    # test for downloading topographical database
+    with tempfile.TemporaryDirectory() as tdb_dir:
+        # download test
+        class_instance.tdb_download_by_labels(['J3224R'], tdb_dir) is True
+        # download test with customized HTTP headers
+        class_instance.tdb_download_by_labels(['J3224R'], tdb_dir, http_headers={'Host': 'www.nic.funet.fi'}) is True
+        # error test for invalid label
+        with pytest.raises(Exception) as exc_info:
+            class_instance.tdb_download_by_labels(['ABCDE'], tdb_dir)
+        assert exc_info.value.args[0] == 'The label "ABCDE" does not exist in the index map.'
+    # errot test for invalid directory
+    with pytest.raises(Exception) as exc_info:
+        class_instance.tdb_download_by_labels(['J3224R'], tdb_dir)
+    assert exc_info.value.args[0] == f'The folder path "{tdb_dir}" is not a valid directory.'
