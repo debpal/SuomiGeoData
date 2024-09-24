@@ -1,10 +1,28 @@
-=============
+===============
 Release Notes
-=============
+===============
+
+
+Version 1.0.0
+---------------
+
+* **Release date:** 24-Sep-2024.
+
+* **Feature Additions:** 
+
+    * Downloads all DEM labels intersected with a given vector format area.
+    * Downloads clipped DEM data that matches a given vector format area.
+    * Downloads CORINE land cover 2018 raster data and vector files of subcatchment divisions SYKE's open-source spatial data.
+    * Extracts individual or merged subcatchments by identifier and uses these areas to download DEM.
+    * Simplified merging and clipping of raster files.
+
+* **Documentation:** Added a tutorial on how to use the new features.
+
+* **Development status:** Upgraded to Alpha from Pre-Alpha.
 
 
 Version 0.1.0
--------------
+---------------
 
 * **Release date:** 17-Sep-2024.
 
@@ -29,7 +47,7 @@ Version 0.1.0
 
 
 Version 0.0.1
--------------
+---------------
 
 * **Release date:** 14-Sep-2024.
 

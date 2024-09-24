@@ -13,6 +13,8 @@ Welcome to SuomiGeoData's documentation!
    introduction
    installation
    quickstart
+   dem
+   landcover
    modules
    changelog
 

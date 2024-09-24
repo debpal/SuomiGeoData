@@ -25,7 +25,7 @@ Access and save the DEM index map:
     dem_gdf.head()
     # save the map with 'True' message a output
     paituli.save_indexmap_dem(
-        file_path=r"C:\Users\Username\Desktop\Folder\indexmap_dem.shp"
+        file_path=r"C:\Users\Username\Folder\indexmap_dem.shp"
     )
     
 Expected output:
@@ -62,7 +62,7 @@ Expected output:
     
     
 Download by labels
-------------------
+--------------------
 Download raster and shapefiles using label names; 
 outputs 'True' if all data files are successfully downloaded.
 
@@ -71,10 +71,10 @@ outputs 'True' if all data files are successfully downloaded.
     # download raster files
     paituli.dem_download_by_labels(
         labels=['K3244G', 'X4344A'], 
-        folder_path=r"C:\Users\Username\Desktop\Folder"
+        folder_path=r"C:\Users\Username\Folder"
     )
     # download topographic database folder
     paituli.tdb_download_by_labels(
         labels=['K2344R', 'J3224R'], 
-        folder_path=r"C:\Users\Username\Desktop\Folder"
+        folder_path=r"C:\Users\Username\Folder"
     )

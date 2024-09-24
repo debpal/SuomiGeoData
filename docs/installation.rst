@@ -1,13 +1,13 @@
-============
+==============
 Installation
-============
+==============
 
 The installation of the package is straightforward. To prevent conflicts with other Python packages, it is recommended to create a separate Python environment. 
 Below are the steps for installing the package using different methods.
 
 
 Create a Python environment
----------------------------
+-----------------------------
 
 Suppose your environment name is my_env, and you can create it by using the following steps through Anaconda distribution.
 
@@ -19,7 +19,7 @@ Suppose your environment name is my_env, and you can create it by using the foll
 
 
 Install from PyPI
------------------
+--------------------
 
 .. code-block:: console
     
@@ -28,7 +28,7 @@ Install from PyPI
 
 
 Install from GitHub repository
-------------------------------
+---------------------------------
 
 .. code-block:: console
 
@@ -36,7 +36,7 @@ Install from GitHub repository
     
     
 Install from source code in editable mode
------------------------------------------
+--------------------------------------------
 
 For developers who want to modify the source code or contribute to the package, it is recommended to install in editable mode.
 Navigate to your directory with the `my_env` Python environemnt activated, and run the following commands. 
