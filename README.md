@@ -3,16 +3,28 @@
 SuomiGeoData is a Python package whose concept originated on September 11, 2024. It is designed to simplify the process of downloading and extracting geospatial data from Suomi, that is Finland. The package offers the following features:
 
 
-* [Paituli](https://paituli.csc.fi/download.html) website
+* [Paituli integration](https://paituli.csc.fi/download.html)
 
     - Provides access to vector format index maps for downloading DEM and the topographic database.
     - Downloads DEM as raster files and the topographic database as shapefiles based on label names from the index maps.
+    - Downloads all DEM labels intersected with a given vector format area.
+    - Downloads clipped DEM data that matches a given vector format area.
+    
+ * [Syke integration](https://www.syke.fi/en-US/Open_information/Spatial_datasets/Downloadable_spatial_dataset) 
+
+    - Downloads CORINE land cover 2018 raster.
+    - Downloads vector files of latest subcatchment divisions, ranging from level 1 to 5.
+    - Extracts individual or merged subcatchments by identifier and uses these areas to download DEM.
+    
+ * Geoprocessing
+
+    - Simplified merging and clipping of raster files.
     
     
 ## Roadmap
 
-* Enable downloading DEM for a specified area using a shapefile.
 * Enable downloading the topographic database for a specified area using a shapefile.
+* Implement searching and merging of features from the downloaded topographic database.
 
 
 ## Easy Installation
@@ -55,6 +67,6 @@ For detailed information, see the [documentation](http://suomigeodata.readthedoc
 | **PyPI**| ![PyPI - Version](https://img.shields.io/pypi/v/SuomiGeoData) ![PyPI - Status](https://img.shields.io/pypi/status/SuomiGeoData) ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/SuomiGeoData) ![PyPI - Wheel](https://img.shields.io/pypi/wheel/SuomiGeoData) ![PyPI - Downloads](https://img.shields.io/pypi/dm/SuomiGeoData) |
 | **GitHub** | ![GitHub last commit](https://img.shields.io/github/last-commit/debpal/SuomiGeoData) [![flake8](https://github.com/debpal/SuomiGeoData/actions/workflows/linting.yml/badge.svg)](https://github.com/debpal/SuomiGeoData/actions/workflows/linting.yml) [![mypy](https://github.com/debpal/SuomiGeoData/actions/workflows/typing.yml/badge.svg)](https://github.com/debpal/SuomiGeoData/actions/workflows/typing.yml) [![pytest](https://github.com/debpal/SuomiGeoData/actions/workflows/testing.yml/badge.svg)](https://github.com/debpal/SuomiGeoData/actions/workflows/testing.yml) ![GitHub repo size](https://img.shields.io/github/repo-size/debpal/SuomiGeoData) |
 | **Codecov** | [![codecov](https://codecov.io/gh/debpal/SuomiGeoData/graph/badge.svg?token=ORFQKXO96C)](https://codecov.io/gh/debpal/SuomiGeoData)  |
-| **Read**_the_**Docs** | [![Documentation Status](https://readthedocs.org/projects/suomigeodata/badge/?version=latest)](https://suomigeodata.readthedocs.io/en/latest/?badge=latest) |
+| **Read** _the_ **Docs** | [![Documentation Status](https://readthedocs.org/projects/suomigeodata/badge/?version=latest)](https://suomigeodata.readthedocs.io/en/latest/?badge=latest) |
 | **License** | ![PyPI - License](https://img.shields.io/pypi/l/SuomiGeoData) |
 

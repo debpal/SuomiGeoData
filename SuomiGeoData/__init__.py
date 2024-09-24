@@ -1,9 +1,11 @@
 from .paituli import Paituli
+from .syke import Syke
 
 
 __all__ = [
-    'Paituli'
+    'Paituli',
+    'Syke'
 ]
 
 
-__version__ = '0.1.0'
+__version__ = '1.0.0'
