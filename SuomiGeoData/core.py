@@ -68,6 +68,29 @@ class Core:
 
         return output
 
+    def _excel_file_extension(
+        self,
+        file_path: str
+    ) -> str:
+
+        '''
+        Returns the extension of an Excel file.
+
+        Parameters
+        ----------
+        file_path : str
+            Path of the Excel file.
+
+        Returns
+        -------
+        str
+            Extension of the Excel file.
+        '''
+
+        output = os.path.splitext(file_path)[-1]
+
+        return output
+
     @property
     def _url_prefix_paituli_dem_tdb(
         self,

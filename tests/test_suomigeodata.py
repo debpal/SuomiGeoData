@@ -1,10 +1,10 @@
 import pytest
+import SuomiGeoData
 import os
 import tempfile
 import geopandas
 import shapely
 import rasterio
-import SuomiGeoData
 
 
 @pytest.fixture(scope='class')
@@ -38,7 +38,8 @@ def message():
         'error_driver': 'Could not retrieve driver from the file path.',
         'error_gdf': 'Input area must be either file or GeoDataFrame format.',
         'error_label': 'The label ABCDE does not exist in the index map.',
-        'error_level': 'Input level must be one of 1, 2, 3, 4, or 5.'
+        'error_level': 'Input level must be one of 1, 2, 3, 4, or 5.',
+        'error_excel': 'Input file extension ".xl" does not match the required ".xlsx".'
     }
 
     return output
@@ -50,27 +51,27 @@ def test_save_indexmap(
 ):
 
     with tempfile.TemporaryDirectory() as tmp_dir:
-        # test for saving DEM index map
-        dem_file = os.path.join(tmp_dir, "indexmap_dem.shp")
+        # pass test for saving DEM index map
+        dem_file = os.path.join(tmp_dir, 'indexmap_dem.shp')
         save_dem = paituli.save_indexmap_dem(dem_file)
         assert save_dem == message['gdf_write']
         dem_gdf = geopandas.read_file(dem_file)
         assert isinstance(dem_gdf, geopandas.GeoDataFrame) is True
         assert dem_gdf.shape[0] == 10320
-        # test for saving topographical database index map
-        tdb_file = os.path.join(tmp_dir, "indexmap_tdb.shp")
+        # pass test for saving topographical database index map
+        tdb_file = os.path.join(tmp_dir, 'indexmap_tdb.shp')
         save_tdb = paituli.save_indexmap_tdb(tdb_file)
         assert save_tdb == message['gdf_write']
         tdb_gdf = geopandas.read_file(tdb_file)
         assert isinstance(tdb_gdf, geopandas.GeoDataFrame) is True
         assert tdb_gdf.shape[0] == 3132
 
-    # test for error of undetected OGR driver while saving DEM index map
+    # error test for undetected OGR driver while saving DEM index map
     with pytest.raises(Exception) as exc_info:
         paituli.save_indexmap_dem('invalid_file_extension.sh')
     assert exc_info.value.args[0] == message['error_driver']
 
-    # test for error of undetected OGR driver while saving topographical database index map
+    # error test for undetected OGR driver while saving topographical database index map
     with pytest.raises(Exception) as exc_info:
         paituli.save_indexmap_tdb('invalid_file_extension.sh')
     assert exc_info.value.args[0] == message['error_driver']
@@ -80,11 +81,11 @@ def test_is_valid_label(
     paituli
 ):
 
-    # test for valid label of DEM index map
+    # pass test for valid label of DEM index map
     assert paituli.is_valid_label_dem('K3244G') is True
     assert paituli.is_valid_label_dem('invalid_label') is False
 
-    # test for valid label of topographical database index map
+    # pass test for valid label of topographical database index map
     assert paituli.is_valid_label_tdb('K2344R') is True
     assert paituli.is_valid_label_tdb('invalid_label') is False
 
@@ -94,23 +95,23 @@ def test_dem_download_by_labels(
     message
 ):
 
-    # test for downloading DEM labels
+    # pass test for downloading DEM labels
     with tempfile.TemporaryDirectory() as tmp_dir:
         assert paituli.dem_download_by_labels(
             ['X4344A'], tmp_dir
         ) == message['download']
-        # test for error when the input is a non empty folder
+        # error test for non empty folder
         with pytest.raises(Exception) as exc_info:
             paituli.dem_download_by_labels(['K3244G'], tmp_dir)
         assert exc_info.value.args[0] == message['folder_empty']
 
-    # test for error when the input is a invalid label
+    # error test for invalid label
     with tempfile.TemporaryDirectory() as tmp_dir:
         with pytest.raises(Exception) as exc_info:
             paituli.dem_download_by_labels(['ABCDE'], tmp_dir)
         assert exc_info.value.args[0] == message['error_label']
 
-    # test for error when the input is a invalid folder path
+    # error test for invalid folder path
     with pytest.raises(Exception) as exc_info:
         paituli.dem_download_by_labels(['X4344A'], tmp_dir)
     assert exc_info.value.args[0] == message['error_folder']
@@ -121,23 +122,23 @@ def test_tdb_download_by_labels(
     message
 ):
 
-    # test for downloading topographical database labels
+    # pass test for downloading topographical database labels
     with tempfile.TemporaryDirectory() as tmp_dir:
         assert paituli.tdb_download_by_labels(
             ['J3224R'], tmp_dir
         ) == message['download']
-        # test for error when the input is a non empty folder
+        # error test for non empty folder
         with pytest.raises(Exception) as exc_info:
             paituli.tdb_download_by_labels(['K2344R'], tmp_dir)
         assert exc_info.value.args[0] == message['folder_empty']
 
-    # test for error when the input is a invalid label
+    # error test for invalid label
     with tempfile.TemporaryDirectory() as tmp_dir:
         with pytest.raises(Exception) as exc_info:
             paituli.tdb_download_by_labels(['ABCDE'], tmp_dir)
         assert exc_info.value.args[0] == message['error_label']
 
-    # test for error when the input is a invalid folder path
+    # error test for invalid folder path
     with pytest.raises(Exception) as exc_info:
         paituli.tdb_download_by_labels(['J3224R'], tmp_dir)
     assert exc_info.value.args[0] == message['error_folder']
@@ -149,16 +150,16 @@ def test_dem_labels_download_by_area(
 ):
 
     with tempfile.TemporaryDirectory() as tmp_dir:
-        # test for error for invalid input
+        # error test for invalid input
         with pytest.raises(Exception) as exc_info:
             paituli.dem_labels_download_by_area(5, tmp_dir)
         assert exc_info.value.args[0] == message['error_gdf']
-        # test for downloading when the input is a GeoDataFrame format
+        # pass test for downloading when the input is a GeoDataFrame format
         example_gdf = paituli.get_example_area
         assert paituli.dem_labels_download_by_area(
             example_gdf, tmp_dir
         ) == message['download']
-        # test for downloading when the input is a file format
+        # pass test for downloading when the input is a file format
         example_file = os.path.join(tmp_dir, 'example_file.shp')
         example_gdf.to_file(example_file)
         sub_dir = os.path.join(tmp_dir, 'sub_dir')
@@ -169,12 +170,12 @@ def test_dem_labels_download_by_area(
 
     example_area = shapely.Polygon([(0, 0), (1, 0), (1, 1), (0, 1)])
     with tempfile.TemporaryDirectory() as tmp_dir:
-        # test for error while the input GeoDataFrame has no CRS
+        # error test for input GeoDataFrame has no CRS
         nocrs_gdf = geopandas.GeoDataFrame({'geometry': [example_area]})
         with pytest.raises(Exception) as exc_info:
             paituli.dem_labels_download_by_area(nocrs_gdf, tmp_dir)
         assert exc_info.value.args[0] == message['error_area']
-        # test for error while the input GeoDataFrame has CRS other than 'EPSG:3067'
+        # error test for input GeoDataFrame has CRS other than 'EPSG:3067'
         crs_gdf = geopandas.GeoDataFrame({'geometry': [example_area]}, crs='EPSG:4326')
         with pytest.raises(Exception) as exc_info:
             paituli.dem_labels_download_by_area(crs_gdf, tmp_dir)
@@ -186,13 +187,13 @@ def test_download_corine_land_cover_2018(
     message
 ):
 
-    # test for downloading Syke's land cover map
+    # pass test for downloading Syke's land cover map
     with tempfile.TemporaryDirectory() as tmp_dir:
         assert len(os.listdir(tmp_dir)) == 0
         assert syke.download_corine_land_cover_2018(tmp_dir) == message['download']
         assert len(os.listdir(tmp_dir)) > 0
 
-    # test for error when the input is a invalid folder path
+    # error test for invalid folder path
     with pytest.raises(Exception) as exc_info:
         syke.download_corine_land_cover_2018(tmp_dir)
     assert exc_info.value.args[0] == message['error_folder']
@@ -207,12 +208,12 @@ def test_dem_by_area(
 
     # temporary directory
     with tempfile.TemporaryDirectory() as tmp_dir:
-        # test for downloading Syke's catchment divisions
+        # pass test for downloading Syke's catchment divisions
         assert syke.download_catchment_divisions_2023(tmp_dir) == message['download']
         catchd5_path = os.path.join(tmp_dir, 'catchment_division_level_5.shp')
         sub_dir = os.path.join(tmp_dir, 'sub_dir')
         os.makedirs(sub_dir)
-        # test for error of Syke's single subcatchment when the input level is not an integer
+        # error test for Syke's single subcatchment when the input level is not an integer
         with pytest.raises(Exception) as exc_info:
             paituli.dem_labels_download_by_syke_subcatchment(
                 input_file=catchd5_path,
@@ -221,7 +222,7 @@ def test_dem_by_area(
                 folder_path=sub_dir
             )
         assert exc_info.value.args[0] == message['error_level']
-        # test for error of Syke's single subcatchment when the input area does not intersect with the index map
+        # error test for Syke's single subcatchment when the input area does not intersect with the index map
         with pytest.raises(Exception) as exc_info:
             paituli.dem_labels_download_by_syke_subcatchment(
                 input_file=catchd5_path,
@@ -230,14 +231,14 @@ def test_dem_by_area(
                 folder_path=sub_dir
             )
         assert exc_info.value.args[0] == message['error_area']
-        # test for downloading DEM labels for single subcatchment from Syke's catchment divisions
+        # pass test for downloading DEM labels for single subcatchment from Syke's catchment divisions
         assert paituli.dem_labels_download_by_syke_subcatchment(
             input_file=catchd5_path,
             level=5,
             single_area=15730216003,
             folder_path=sub_dir
         ) == message['download']
-        # test for selecting single polygons for Syke's single subcatchment
+        # pass test for selecting single polygons for Syke's single subcatchment
         spg_gdf = syke.select_single_subcatchment(
             input_file=catchd5_path,
             level=5,
@@ -248,7 +249,7 @@ def test_dem_by_area(
         )
         assert isinstance(spg_gdf, geopandas.GeoDataFrame) is True
         assert spg_gdf.geometry.iloc[0].bounds == (594410.0, 7377690.0, 596350.0, 7379700.0)
-        # test for error of undetected OGR driver while saving Syke's single subcatchment
+        # error test for undetected OGR driver while saving Syke's single subcatchment
         with pytest.raises(Exception) as exc_info:
             syke.select_single_subcatchment(
                 input_file=catchd5_path,
@@ -257,7 +258,7 @@ def test_dem_by_area(
                 output_file=os.path.join(tmp_dir, 'invalid_file_extension.sh')
             )
         assert exc_info.value.args[0] == message['error_driver']
-        # test for Syke's single subcatchment with merging polygons and percentage cutoff
+        # pass test for Syke's single subcatchment with merging polygons and percentage cutoff
         mpg_gdf = syke.select_single_subcatchment(
             input_file=catchd5_path,
             level=5,
@@ -267,7 +268,7 @@ def test_dem_by_area(
             percentage_cutoff=0
         )
         assert mpg_gdf.geometry.iloc[0].bounds == (689130.0, 6898840.0, 693370.0, 6902730.0)
-        # test for Syke's single subcatchment without merging polygons or percentage cutoff
+        # pass test for Syke's single subcatchment without merging polygons or percentage cutoff
         mpg_gdf = syke.select_single_subcatchment(
             input_file=catchd5_path,
             level=5,
@@ -276,26 +277,26 @@ def test_dem_by_area(
             percentage_cutoff=-1
         )
         assert round(mpg_gdf.geometry.iloc[0].area) == 238699
-        # test for raster merging
+        # pass test for raster merging
         assert core.raster_merging(
             folder_path=sub_dir,
             output_file=os.path.join(tmp_dir, 'check_merged.tif')
         ) == 'Merging of rasters completed.'
-        # test for error in raster merging when the input is a invalid folder path
+        # error test for raster merging when the input is a invalid folder path
         with pytest.raises(Exception) as exc_info:
             core.raster_merging(
                 folder_path=os.path.join(tmp_dir, 'nonexist_dir'),
                 output_file=os.path.join(tmp_dir, 'check_merged.tif')
             )
         assert exc_info.value.args[0] == message['error_folder']
-        # test for error of undetected driver while raster merging
+        # error test for undetected driver while raster merging
         with pytest.raises(Exception) as exc_info:
             core.raster_merging(
                 folder_path=sub_dir,
                 output_file=os.path.join(tmp_dir, 'merged.t')
             )
         assert exc_info.value.args[0] == message['error_driver']
-        # test for raster clipping
+        # pass test for raster clipping
         assert core.raster_clipping_by_mask(
             input_file=os.path.join(tmp_dir, 'check_merged.tif'),
             mask_area=geopandas.read_file(os.path.join(tmp_dir, 'single_subcatchment_spg.shp')),
@@ -304,7 +305,7 @@ def test_dem_by_area(
         with rasterio.open(os.path.join(tmp_dir, 'check_clipped.tif')) as clip_raster:
             assert clip_raster.bounds.bottom == 7377690.0
             assert clip_raster.bounds.top == 7379700.0
-        # test for error of invalid mask area while clipping raster file
+        # error test for invalid mask area while clipping raster file
         with pytest.raises(Exception) as exc_info:
             core.raster_clipping_by_mask(
                 input_file=os.path.join(tmp_dir, 'check_merged.tif'),
@@ -312,7 +313,7 @@ def test_dem_by_area(
                 output_file=os.path.join(tmp_dir, 'check_clipped.tif')
             )
         assert exc_info.value.args[0] == message['error_gdf']
-        # test for error of undetected driver while clipping raster file
+        # error test for undetected driver while clipping raster file
         with pytest.raises(Exception) as exc_info:
             core.raster_clipping_by_mask(
                 input_file=os.path.join(tmp_dir, 'check_merged.tif'),
@@ -320,7 +321,7 @@ def test_dem_by_area(
                 output_file=os.path.join(tmp_dir, 'invalid.t')
             )
         assert exc_info.value.args[0] == message['error_driver']
-        # test for downoading clipped dem from Syke's catchment divisions
+        # pass test for downoading clipped dem from Syke's catchment divisions
         raster_path = os.path.join(tmp_dir, 'clipped_catchment.tif')
         assert paituli.dem_clipped_download_by_syke_subcatchment(
             input_file=catchd5_path,
@@ -333,7 +334,7 @@ def test_dem_by_area(
             assert tmp_raster.bounds.left == 594410.0
             assert tmp_raster.bounds.right == 596350.0
         catchd2_path = os.path.join(tmp_dir, 'catchment_division_level_2.shp')
-        # test for error of Syke's multiple subcatchment without merging or percentage cutoff
+        # error test for Syke's multiple subcatchment without merging or percentage cutoff
         with pytest.raises(Exception) as exc_info:
             syke.merging_multiple_subcatchments(
                 input_file=catchd2_path,
@@ -341,7 +342,7 @@ def test_dem_by_area(
                 multiple_area=[1159, 1160, 1161],
             )
         assert exc_info.value.args[0] == message['error_level']
-        # test for error of Syke's multiple subcatchment when the input area contains single element
+        # error test for Syke's multiple subcatchment when the input area contains single element
         with pytest.raises(Exception) as exc_info:
             syke.merging_multiple_subcatchments(
                 input_file=catchd2_path,
@@ -349,7 +350,7 @@ def test_dem_by_area(
                 multiple_area=[11],
             )
         assert exc_info.value.args[0] == 'Input multiple area list contains single element.'
-        # test for error of Syke's multiple subcatchment when the input area does not intersect with the index map
+        # error test for Syke's multiple subcatchment when the input area does not intersect with the index map
         with pytest.raises(Exception) as exc_info:
             syke.merging_multiple_subcatchments(
                 input_file=catchd2_path,
@@ -357,7 +358,7 @@ def test_dem_by_area(
                 multiple_area=[11, 12],
             )
         assert exc_info.value.args[0] == message['error_area']
-        # test for error of undetected OGR driver while saving Syke's multiple subcatchment
+        # error test for undetected OGR driver while saving Syke's multiple subcatchment
         with pytest.raises(Exception) as exc_info:
             syke.merging_multiple_subcatchments(
                 input_file=catchd2_path,
@@ -366,7 +367,7 @@ def test_dem_by_area(
                 output_file=os.path.join(tmp_dir, 'invalid_file_extension.sh'),
             )
         assert exc_info.value.args[0] == message['error_driver']
-        # test for Syke's multiple subcatchment without percentage cutoff
+        # pass test for Syke's multiple subcatchment without percentage cutoff
         msc_gdf = syke.merging_multiple_subcatchments(
             input_file=catchd2_path,
             level=2,
@@ -374,7 +375,7 @@ def test_dem_by_area(
             output_file=os.path.join(tmp_dir, 'merging_msc.shp'),
         )
         assert msc_gdf.shape[0] == 20
-        # test for Syke's multiple subcatchment with percentage cutoff
+        # pass test for Syke's multiple subcatchment with percentage cutoff
         msc_gdf = syke.merging_multiple_subcatchments(
             input_file=catchd5_path,
             level=5,
@@ -382,7 +383,7 @@ def test_dem_by_area(
             percentage_cutoff=0
         )
         assert msc_gdf.geometry.iloc[0].area == 22858200.0
-        # test for downoading clipped dem from area
+        # pass test for downoading clipped dem from area
         raster_path = os.path.join(tmp_dir, 'clipped_area.tif')
         assert paituli.dem_clipped_download_by_area(
             input_area=msc_gdf,
@@ -392,7 +393,26 @@ def test_dem_by_area(
             assert tmp_raster.bounds.left == 582480.0
             assert tmp_raster.bounds.right == 589690.0
 
-    # test for error of donloading Syke's catchment division when the input is a invalid folder path
+    # error test for downloading Syke's catchment division when the input is a invalid folder path
     with pytest.raises(Exception) as exc_info:
         syke.download_catchment_divisions_2023(tmp_dir)
     assert exc_info.value.args[0] == message['error_folder']
+
+
+def test_tdb_metadata_to_dataframe(
+    paituli,
+    message
+):
+
+    # pass test for topographic database to multi-index DataFrame
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        excel_file = os.path.join(tmp_dir, 'tdb_metadata.xlsx')
+        df = paituli.tdb_metadata_to_dataframe(
+            excel_file=excel_file
+        )
+        assert len(df.index.names) == 4
+
+    # error test for invalid Excel file input
+    with pytest.raises(Exception) as exc_info:
+        paituli.tdb_metadata_to_dataframe('tdb_metadata.xl')
+    assert exc_info.value.args[0] == message['error_excel']

@@ -2,6 +2,7 @@ import os
 import io
 import zipfile
 import typing
+import pandas
 import geopandas
 import requests
 import tempfile
@@ -659,3 +660,124 @@ class Paituli:
             print(message)
 
         return 'All geoprocessing has been completed.'
+
+    def tdb_metadata_to_dataframe(
+        self,
+        excel_file: str,
+        http_headers: typing.Optional[dict[str, str]] = None
+    ) -> pandas.DataFrame:
+
+        '''
+        Downloads topographic database metadata,
+        converts it to a multi-index DataFrame, and saves it to an Excel file.
+
+        Parameters
+        ----------
+        excel_file : str
+            Path to an Excel file to save the DataFrame.
+
+        http_headers : dict, optional
+            HTTP headers to be used for the web request. Defaults to
+            :attr:`SuomiGeoData.core.Core.default_http_headers` attribute if not provided.
+
+        Returns
+        -------
+        DataFrame
+            A multi-index DataFrame of the topographic database metadata.
+        '''
+
+        # web request headers
+        headers = Core().default_http_headers if http_headers is None else http_headers
+
+        # downloading topographic database metadata
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            url = 'https://www.nic.funet.fi/index/geodata/mml/maastotietokanta/2022/maastotietokanta_kohdemalli_eng_2019.xlsx'
+            response = requests.get(
+                url=url,
+                headers=headers
+            )
+            download_file = os.path.join(tmp_dir, 'tdb_metadata.xlsx')
+            with open(download_file, 'wb') as download_write:
+                download_write.write(response.content)
+            df = pandas.read_excel(download_file)
+
+        # processing of the Dataframe
+        df = df.dropna(
+            thresh=3,
+            ignore_index=True
+        )
+        df = df.iloc[:, :-2]
+        df = df.drop(index=0).reset_index(drop=True)
+        df = df.dropna(subset=[df.columns[-1]]).reset_index(drop=True)
+        df.columns = ['Name', 'Category', 'Shape', 'Group', 'Class']
+        index_columns = ['Category', 'Shape', 'Group']
+        df = df.set_index(index_columns)
+        df = df.sort_index(
+            level=index_columns,
+            ascending=[True] * len(index_columns)
+        )
+        df = df.groupby(level=index_columns, group_keys=False).apply(
+            lambda x: x.sort_values('Class')
+        )
+        df = df.set_index('Name', append=True)
+
+        # saving DataFrame to the input Excel file
+        excel_ext = Core()._excel_file_extension(excel_file)
+        if excel_ext != '.xlsx':
+            raise Exception(f'Input file extension "{excel_ext}" does not match the required ".xlsx".')
+        else:
+            with pandas.ExcelWriter(excel_file, engine='xlsxwriter') as excel_writer:
+                df.to_excel(excel_writer)
+                workbook = excel_writer.book
+                worksheet = excel_writer.sheets['Sheet1']
+                # excel sheet column width
+                worksheet.set_column(len(df.index.names), len(df.index.names) + len(df.columns) - 1, 20)
+                for idx, i in enumerate(df.index.names):
+                    if i == 'Category':
+                        worksheet.set_column(idx, idx, 30)
+                    elif i == 'Name':
+                        worksheet.set_column(idx, idx, 50)
+                    else:
+                        worksheet.set_column(idx, idx, 20)
+                # index formatting
+                for i in range(len(df.index.names)):
+                    if df.index.names[i] != 'Name':
+                        for jdx, j in enumerate(df.index.get_level_values(i)):
+                            worksheet.write(
+                                jdx + 1, i, j, workbook.add_format(
+                                    {
+                                        'align': 'center', 'valign': 'vcenter', 'bold': True, 'border': 1, 'font_size': 14
+                                    }
+                                )
+                            )
+                    else:
+                        for jdx, j in enumerate(df.index.get_level_values(i)):
+                            worksheet.write(
+                                jdx + 1, i, j, workbook.add_format(
+                                    {
+                                        'align': 'left', 'valign': 'vcenter', 'bold': True, 'border': 1
+                                    }
+                                )
+                            )
+                # column formatting
+                for i in range(len(df.columns)):
+                    for jdx, j in enumerate(df[df.columns[i]]):
+                        worksheet.write(
+                            jdx + 1, len(df.index.names) + i, j,
+                            workbook.add_format(
+                                {
+                                    'align': 'right', 'valign': 'vcenter', 'border': 1
+                                }
+                            )
+                        )
+                # header formatting
+                for idx, i in enumerate(list(df.index.names) + list(df.columns)):
+                    worksheet.write(
+                        0, idx, i, workbook.add_format(
+                            {
+                                'align': 'center', 'bold': True, 'border': 1, 'font_size': 18, 'fg_color': 'cyan'
+                            }
+                        )
+                    )
+
+        return df
