@@ -1,5 +1,5 @@
 Submodules
-----------
+------------
 
 .. automodule:: SuomiGeoData.core
    :members:

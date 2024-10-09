@@ -1,13 +1,13 @@
-===========
+============
 Land Cover
-===========
+============
 
 A brief overview of the features related to land cover.
 
 
 Class Instance
------------------
-Let's start with the instantiation of the class:
+----------------
+Let's start by instantiating the class.
 
 .. code-block:: python
 
@@ -17,8 +17,8 @@ Let's start with the instantiation of the class:
 
 
 Download Land Cover
-----------------------
-Get the land cover map:
+---------------------
+Get the land cover map.
 
 .. code-block:: python
 
@@ -29,7 +29,7 @@ Get the land cover map:
     
 Clipped Land Cover 
 --------------------
-Get the clipped land cover for the example area:
+Get the clipped land cover for the example area.
 
 .. code-block:: python
 

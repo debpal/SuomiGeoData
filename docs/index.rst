@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to SuomiGeoData's documentation!
-========================================
+==========================================
 
 .. toctree::
    :maxdepth: 1
@@ -15,13 +15,14 @@ Welcome to SuomiGeoData's documentation!
    quickstart
    dem
    landcover
+   tdb
    modules
    changelog
 
 
 
 Indices and tables
-==================
+====================
 
 * :ref:`genindex`
 * :ref:`modindex`

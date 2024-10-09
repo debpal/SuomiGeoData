@@ -3,6 +3,16 @@ Release Notes
 ===============
 
 
+Version 1.0.1
+---------------
+
+* **Release date:** 09-Oct-2024.
+
+* **Feature Additions:** Downloads topographic database metadata and converts to a readble MultiIndex DataFrame.
+
+* **Development status:** Upgraded from Alpha to Beta.
+
+
 Version 1.0.0
 ---------------
 

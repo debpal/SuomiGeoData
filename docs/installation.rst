@@ -19,7 +19,7 @@ Suppose your environment name is my_env, and you can create it by using the foll
 
 
 Install from PyPI
---------------------
+-------------------
 
 .. code-block:: console
     
@@ -28,7 +28,7 @@ Install from PyPI
 
 
 Install from GitHub repository
----------------------------------
+--------------------------------
 
 .. code-block:: console
 

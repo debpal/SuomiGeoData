@@ -1,12 +1,12 @@
-===========
+============
 Quickstart
-===========
+============
 
 This guide provides a quick overview to get started with :mod:`SuomiGeoData`.
 
 
 Verify Installation
---------------------
+---------------------
 Ensure successful installation by running the following commands:
 
 .. code-block:: python
@@ -16,7 +16,7 @@ Ensure successful installation by running the following commands:
     
     
 Index Map
-----------
+-----------
 Access and save the DEM index map:
 
 .. code-block:: python
@@ -33,7 +33,6 @@ Expected output:
 .. code-block:: text
 
          label	                                   path	                                         geometry
-    -----------------------------------------------------------------------------------------------------
     0	K3244G	mml/dem2m/2008_latest/K3/K32/K3244G.tif	POLYGON ((206000 6654000, 206000 6660000, 2120...
     1	K3244H	mml/dem2m/2008_latest/K3/K32/K3244H.tif	POLYGON ((206000 6660000, 206000 6666000, 2120...
     2	K3222E	mml/dem2m/2008_latest/K3/K32/K3222E.tif	POLYGON ((128000 6654000, 128000 6660000, 1340...

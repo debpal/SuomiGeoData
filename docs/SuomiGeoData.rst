@@ -1,5 +1,5 @@
 Module contents
----------------
+-----------------
 
 .. automodule:: SuomiGeoData
    :members:

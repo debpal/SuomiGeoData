@@ -1,13 +1,13 @@
-==============================
+===============================
 Digital Elevation Model (DEM)
-==============================
+===============================
 
 A brief overview of the features for working with Digital Elevation Models (DEM).
 
 
 Class Instance
------------------
-Let's start with the instantiation of the class:
+----------------
+Let's start by instantiating the class.
 
 .. code-block:: python
 
@@ -16,9 +16,22 @@ Let's start with the instantiation of the class:
     syke = SuomiGeoData.Syke()
     
     
+Download by Labels
+--------------------
+Download DEM using label names.
+
+.. code-block:: python
+    
+    # download DEM using labels
+    paituli.dem_download_by_labels(
+        labels=['K3244G', 'X4344A'], 
+        folder_path=r"C:\Users\Username\Folder"
+    )
+    
+    
 Example area
 --------------
-Access the example area and plot it:
+Access the example area and plot it.
 
 .. code-block:: python
 
@@ -34,7 +47,7 @@ Access the example area and plot it:
 
 Clipped DEM
 -------------
-Get the clipped DEM for the example area:
+Get the clipped DEM for the example area.
 
 .. code-block:: python
     
@@ -45,8 +58,8 @@ Get the clipped DEM for the example area:
     
     
 DEM Labels
------------
-Retrieve the DEM labels, if required, for the example area:
+------------
+Retrieve the DEM labels for the example area, if required.
 
 .. code-block:: python
     
@@ -57,7 +70,7 @@ Retrieve the DEM labels, if required, for the example area:
     
     
 Syke's catchment divison
----------------------------
+--------------------------
 Download the vector files of catchment divisions and obtain DEM data from the subcatchment identifier.
 
 .. code-block:: python
