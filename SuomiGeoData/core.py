@@ -187,7 +187,7 @@ class Core:
             # merge the split rasters
             profile = split_rasters[0].profile
             output_array, output_transform = rasterio.merge.merge(
-                datasets=split_rasters
+                sources=split_rasters
             )
             # update merged raster profile
             profile.update(
