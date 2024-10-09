@@ -5,19 +5,21 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "SuomiGeoData"
-description = "Downloading and extracting geospatial data from Suomi, that is Finland."
+description = "Downloading and extracting geospatial data from Finland, that is Suomi."
 authors = [
   { name="Debasish Pal", email="bestdebasish@gmail.com" },
 ]
 dependencies = [
     "geopandas>=1.0.1",
     "rasterio>=1.3.11",
-    "requests>=2.32.3"
+    "requests>=2.32.3",
+    "openpyxl>=3.1.5",
+    "xlsxwriter>=3.2.0"
 ]
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
-	"Development Status :: 3 - Alpha",
+	"Development Status :: 4 - Beta",
 	"Programming Language :: Python :: 3.10",
 	"Programming Language :: Python :: 3.11",
 	"Programming Language :: Python :: 3.12",
@@ -31,8 +33,10 @@ classifiers = [
 dynamic = ["version"]
 keywords = [
 	"Paituli",
+    "Syke",
 	"Topography",
-	"Data download"
+	"Data download",
+    "Data analysis"
 ]
 
 
