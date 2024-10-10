@@ -1,6 +1,6 @@
-===============================
-Digital Elevation Model (DEM)
-===============================
+=========================
+Digital Elevation Model
+=========================
 
 A brief overview of the features for working with Digital Elevation Models (DEM).
 
