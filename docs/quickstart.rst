@@ -7,7 +7,7 @@ This guide provides a quick overview to get started with :mod:`SuomiGeoData`.
 
 Verify Installation
 ---------------------
-Ensure successful installation by running the following commands:
+Ensure successful installation by running the following commands.
 
 .. code-block:: python
 
@@ -17,7 +17,7 @@ Ensure successful installation by running the following commands:
     
 Index Map
 -----------
-Access and save the DEM index map:
+Access and save the DEM index map.
 
 .. code-block:: python
 
@@ -42,7 +42,7 @@ Expected output:
 
 Labels
 --------
-Retrieve the list of label names for the topographic database:
+Retrieve the list of label names for the topographic database.
 
 .. code-block:: python
     
@@ -58,22 +58,3 @@ Expected output:
      'K2443L',
      'K2443R',
      ...]
-    
-    
-Download by labels
---------------------
-Download raster and shapefiles using label names; 
-outputs 'True' if all data files are successfully downloaded.
-
-.. code-block:: python
-    
-    # download raster files
-    paituli.dem_download_by_labels(
-        labels=['K3244G', 'X4344A'], 
-        folder_path=r"C:\Users\Username\Folder"
-    )
-    # download topographic database folder
-    paituli.tdb_download_by_labels(
-        labels=['K2344R', 'J3224R'], 
-        folder_path=r"C:\Users\Username\Folder"
-    )

@@ -7,7 +7,7 @@ A brief overview of the features for working with Digital Elevation Models (DEM)
 
 Class Instance
 ----------------
-Let's start by instantiating the class.
+Let's start by instantiating the classes.
 
 .. code-block:: python
 
@@ -69,8 +69,8 @@ Retrieve the DEM labels for the example area, if required.
     )
     
     
-Syke's catchment divison
---------------------------
+DEM from Syke's Catchment Divison
+-----------------------------------
 Download the vector files of catchment divisions and obtain DEM data from the subcatchment identifier.
 
 .. code-block:: python
