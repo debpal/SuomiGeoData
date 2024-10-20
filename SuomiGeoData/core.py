@@ -11,7 +11,8 @@ import geopandas
 class Core:
 
     '''
-    Core functionality of :mod:`SuomiGeoData` module.
+    Provides common functionality used throughout
+    the :mod:`SuomiGeoData` package.
     '''
 
     def is_valid_ogr_driver(
@@ -20,7 +21,7 @@ class Core:
     ) -> bool:
 
         '''
-        Returns whether the given file path is valid to write a GeoDataFrame.
+        Returns whether the given path is valid to write a GeoDataFrame.
 
         Parameters
         ----------
@@ -47,7 +48,7 @@ class Core:
     ) -> bool:
 
         '''
-        Returns whether the given file path is a valid raster file.
+        Returns whether the given path is a valid to write a raster array.
 
         Parameters
         ----------
@@ -126,7 +127,7 @@ class Core:
     def raster_merging(
         self,
         folder_path: str,
-        output_file: str,
+        raster_file: str,
         raster_ext: str = '.tif',
         **kwargs: typing.Any
     ) -> str:
@@ -139,7 +140,7 @@ class Core:
         folder_path : str
             Folder path containing input raster files.
 
-        output_file : str
+        raster_file : str
             File path to save the output raster.
 
         raster_ext : str, optional
@@ -156,15 +157,10 @@ class Core:
         '''
 
         # file paths
-        if os.path.isdir(folder_path):
-            file_paths = filter(
-                lambda x: os.path.isfile(os.path.join(folder_path, x)),
-                os.listdir(folder_path)
-            )
-        else:
-            raise Exception(
-                'The folder path does not exist.'
-            )
+        file_paths = filter(
+            lambda x: os.path.isfile(os.path.join(folder_path, x)),
+            os.listdir(folder_path)
+        )
 
         # extract raster files
         raster_files = filter(
@@ -173,7 +169,7 @@ class Core:
         )
 
         # raster merging
-        check_file = self.is_valid_raster_driver(output_file)
+        check_file = self.is_valid_raster_driver(raster_file)
         # output file check fail
         if check_file is False:
             raise Exception(
@@ -200,7 +196,7 @@ class Core:
             for key, value in kwargs.items():
                 profile[key] = value
             # save the merged raster
-            with rasterio.open(output_file, 'w', **profile) as output_raster:
+            with rasterio.open(raster_file, 'w', **profile) as output_raster:
                 output_raster.write(output_array)
             # close the split rasters
             for raster in split_rasters:
@@ -211,9 +207,8 @@ class Core:
     def raster_clipping_by_mask(
         self,
         input_file: str,
-        mask_area: str | geopandas.GeoDataFrame,
+        mask_file: str,
         output_file: str,
-        **kwargs: typing.Any
     ) -> str:
 
         '''
@@ -222,17 +217,13 @@ class Core:
         Parameters
         ----------
         input_file : str
-            File path to the input raster.
+            File path of the input raster.
 
-        mask_area : str or GeoDataFrame
-            Mask area either as a file path or a GeoDataFrame.
+        mask_file : str
+            Shapefile path of input mask area.
 
         output_file : str
             File path to save the output raster.
-
-        **kwargs : optional
-            Additional keyword arguments for updating the dictionary of
-            :attr:`rasterio.profile` attribute.
 
         Returns
         -------
@@ -240,15 +231,6 @@ class Core:
             A confirmation message indicating that the raster clipping is complete.
         '''
 
-        # mask area
-        if isinstance(mask_area, str):
-            mask_geometry = geopandas.read_file(mask_area).geometry.to_list()
-        elif isinstance(mask_area, geopandas.GeoDataFrame):
-            mask_geometry = mask_area.geometry.to_list()
-        else:
-            raise Exception('Input area must be either file or GeoDataFrame format.')
-
-        # raster clipping
         check_file = self.is_valid_raster_driver(output_file)
         # output file check fail
         if check_file is False:
@@ -256,6 +238,8 @@ class Core:
                 'Could not retrieve driver from the file path.'
             )
         else:
+            # mask area
+            mask_geometry = geopandas.read_file(mask_file).geometry.to_list()
             # raster clipping
             with rasterio.open(input_file) as input_raster:
                 profile = input_raster.profile
@@ -271,10 +255,61 @@ class Core:
                      'width': output_array.shape[2],
                      'transform': output_transform}
                 )
-                for key, value in kwargs.items():
-                    profile[key] = value
                 # save the clipped raster
                 with rasterio.open(output_file, 'w', **profile) as output_raster:
                     output_raster.write(output_array)
 
         return 'Raster clipping completed.'
+
+    def shape_clipping_by_mask(
+        self,
+        input_file: str,
+        mask_file: str,
+        output_file: str,
+    ) -> str:
+
+        '''
+        Clips a shapefile using a mask and returns a confirmation message.
+
+        Parameters
+        ----------
+        input_file : str
+            Shapefile path of the input GeoDataFrame.
+
+        mask_file : str
+            Shapefile path of the mask GeoDataFrame.
+
+        output_file : str
+            Shapefile path to save the output GeoDataFrame.
+
+        Returns
+        -------
+        str
+            A confirmation message indicating that the shapefile clipping is complete.
+        '''
+
+        # check output file
+        check_file = Core().is_valid_ogr_driver(output_file)
+        if check_file is True:
+            pass
+        else:
+            raise Exception('Could not retrieve driver from the file path.')
+
+        # input area
+        input_gdf = geopandas.read_file(input_file)
+
+        # mask area
+        mask_gdf = geopandas.read_file(mask_file)
+
+        # input area clipping
+        clip_gdf = geopandas.clip(input_gdf, mask_gdf, keep_geom_type=True)
+        clip_gdf = clip_gdf.reset_index(drop=True)
+
+        # saving output GeoDataFrame
+        if clip_gdf.shape[0] == 0:
+            raise Exception('No geometry is found in the input area.')
+        else:
+            clip_gdf = clip_gdf.drop_duplicates(ignore_index=True)
+            clip_gdf.to_file(output_file)
+
+        return 'Shape clipping completed.'
