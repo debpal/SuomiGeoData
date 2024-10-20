@@ -1,31 +1,32 @@
 # SuomiGeoData
 
-SuomiGeoData is a Python package designed to simplify the process of downloading and analyzing geospatial data from Finland, that is Suomi. Conceptualized on September 11, 2024, and launched on September 14, 2024, this package is tailored for users with limited coding experience but still in need powerful geospatial insights. It streamlines the workflow by handling internal complexities, allowing users to focus on desired outputs rather than intermediate steps. Active development is ongoing, with exciting new features planned for future releases. The goal of SuomiGeoData is to empower users by providing easy access to open-source geodapatial data, enabling informed decision-making by simplified analysis. Currently, the package offers the following features:
+SuomiGeoData is a Python package designed to simplify the process of downloading and analyzing geospatial data from Finland, that is Suomi. Conceptualized on September 11, 2024, and launched on September 14, 2024, this package is tailored for users with limited coding experience but still in need powerful geospatial insights. It streamlines the workflow by handling internal complexities, allowing users to focus on desired outputs rather than intermediate steps. The goal of SuomiGeoData is to empower users by providing easy access to open-source geodapatial data, enabling informed decision-making by simplified analysis. Currently, the package offers the following features:
 
 
 * [Paituli integration](https://paituli.csc.fi/download.html)
 
-    - Provides access to vector format index maps for downloading DEM and the topographic database.
-    - Downloads DEM as raster files and the topographic database as shapefiles based on label names from the index maps.
-    - Downloads all DEM labels intersected with a given vector format area.
-    - Downloads clipped DEM data that matches a given vector format area.
-    - Downloads topographic database metadata and converts to a readble MultiIndex DataFrame.
-    
- * [Syke integration](https://www.syke.fi/en-US/Open_information/Spatial_datasets/Downloadable_spatial_dataset) 
+    - Digital Elevation Model (DEM)
 
+        - Provides access to a vector format index map of DEM raster labels.
+        - Downloads DEM raster files based on label names from the index map.
+        - Downloads raster files of all DEM labels intersecting with a given vector format area.
+        - Downloads a clipped DEM raster file that matches a given vector format area.
+        
+    - Topograhic Database
+        - Provides access to a vector format index map of topographic database labels.
+        - Downloads topographic database folders of shapefiles based on label names from the index map.
+        - Downloads shapefile folders of all topographic database labels intersecting with a given vector format area.
+        - Downloads topographic database metadata containing the name and class number of the geometric features.
+        - Extracts feature geometries based on class number from the shapefile folders.
+        - Downloads feature geometries based on class number located within a given vector format area.
+    
+ * [Syke integration](https://www.syke.fi/en-US/Open_information/Spatial_datasets/Downloadable_spatial_dataset)
+ 
     - Downloads CORINE land cover 2018 raster.
-    - Downloads vector files of latest subcatchment divisions, ranging from level 1 to 5.
-    - Extracts individual or merged subcatchments by identifier and uses these areas to download DEM.
-    
- * Geoprocessing
-
-    - Simplified merging and clipping of raster files.
-    
-    
-## Roadmap
-
-* Enable downloading the topographic database for a specified area using a shapefile.
-* Implement searching and merging of features from the downloaded topographic database.
+    - Downloads vector files of the latest subcatchment divisions, ranging from level 1 to 5.
+    - Extracts individual or merged subcatchments by identifier number from the vector files.
+    - Downloads clipped DEM raster files by subcatchment identifiers.
+    - Downloads feature geometries based on class number and subcatchment identifiers.
 
 
 ## Easy Installation
@@ -43,16 +44,15 @@ A brief example of how to start:
 >>> import SuomiGeoData
 >>> paituli = SuomiGeoData.Paituli()
 
-# get the topographic database index map
->>> paituli.indexmap_tdb.head()
+# DEM raster labels
+>>> paituli.dem_labels
 
-     label                                               path	                                         geometry
-0	K2344R	mml/maastotietokanta/2022/shp/K2/K23/K2344R.sh...	POLYGON ((104000 6606000, 104000 6618000, 1160...
-1	K2334R	mml/maastotietokanta/2022/shp/K2/K23/K2334R.sh...	POLYGON ((104000 6582000, 104000 6594000, 1160...
-2	K2343R	mml/maastotietokanta/2022/shp/K2/K23/K2343R.sh...	POLYGON ((104000 6594000, 104000 6606000, 1160...
-3	K2443L	mml/maastotietokanta/2022/shp/K2/K24/K2443L.sh...	POLYGON ((92000 6642000, 92000 6654000, 104000...
-4	K2443R	mml/maastotietokanta/2022/shp/K2/K24/K2443R.sh...	POLYGON ((104000 6642000, 104000 6654000, 1160...
-...
+['K3244G',
+ 'K3244H',
+ 'K3222E',
+ 'K3222A',
+ 'K3222C',
+ ...]
 ```
 
 ## Documentation
