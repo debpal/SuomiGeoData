@@ -23,10 +23,6 @@ Access and save the DEM index map.
 
     dem_gdf = paituli.indexmap_dem
     dem_gdf.head()
-    # save the map with 'True' message a output
-    paituli.save_indexmap_dem(
-        file_path=r"C:\Users\Username\Folder\indexmap_dem.shp"
-    )
     
 Expected output:
 

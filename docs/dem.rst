@@ -35,8 +35,11 @@ Access the example area and plot it.
 
 .. code-block:: python
 
-    example_area = paituli.get_example_area
-    # for JupyterLab user
+    # save the example area
+    example_gdf = paituli.get_example_area
+    example_file = r"C:\Users\Username\Folder\example.shp"
+    example_gdf.to_file(example_file)
+    # plot the example area
     example_area.iloc[0].geometry
     
 
@@ -52,50 +55,26 @@ Get the clipped DEM for the example area.
 .. code-block:: python
     
     paituli.dem_clipped_download_by_area(
-        input_area=example_area,
+        input_area=example_file,
         output_file=r"C:\Users\Username\Folder\example_area.tif"
     )
-    
-    
-DEM Labels
-------------
-Retrieve the DEM labels for the example area, if required.
 
-.. code-block:: python
     
-    paituli.dem_labels_download_by_area(
-        input_area=example_area,
-        folder_path=r"C:\Users\Username\Empty_folder_with_no_files"
-    )
-    
-    
-DEM from Syke's Catchment Divison
------------------------------------
-Download the vector files of catchment divisions and obtain DEM data from the subcatchment identifier.
+Clipped DEM from Syke's Subcatchment Identifiers
+--------------------------------------------------
+Download the vector files of catchment divisions and obtain DEM data from the subcatchment identifiers.
 
 .. code-block:: python
     
     # download catchment divisions
     syke.download_catchment_divisions_2023(
-        folder_path=r"C:\Users\Username\Folder\Cactment_Folder"
+        folder_path=r"C:\Users\Username\Folder"
     )
     
-    # get clipped DEM from the subcatchment identifier
+    # clipped DEM from the subcatchment identifier
     paituli.dem_clipped_download_by_syke_subcatchment(
-        input_file=r"C:\Users\Username\Folder\Cactment_Folder\catchment_division_level_5.shp",
+        input_file=r"C:\Users\Username\Folder\catchment_division_level_5.shp",
         level=5,
-        single_area=15730216003,
-        output_file=r"C:\Users\Username\Folder\clipped_dem.tif"
-    )
-    
-    # merge mutiple subcatchments that share boundaries and get the clipped DEM
-    msc_gdf = syke.merging_multiple_subcatchments(
-        input_file=r"C:\Users\Username\Folder\Cactment_Folder\catchment_division_level_5.shp",
-        level=5,
-        multiple_area=[15730214505, 15730214514],
-        percentage_cutoff=0 # read about this parameter in the documentation 
-    )
-    paituli.dem_clipped_download_by_area(
-        input_area=msc_gdf,
-        output_file=r"C:\Users\Username\Folder\merged_clipped_dem.tif"
+        id_subcatchments=[15730214505, 15730214514],
+        output_file=r"C:\Users\Username\Folder\syke_subcatchment_clipped_dem.tif"
     )

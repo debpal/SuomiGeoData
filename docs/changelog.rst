@@ -3,6 +3,20 @@ Release Notes
 ===============
 
 
+Version 1.1.1
+---------------
+
+* **Release date:** 20-Oct-2024.
+
+* **Feature Additions:** 
+
+    * Extracts feature geometries based on class number from the shapefile folders of topographic database labels.
+    * Downloads feature geometries based on class number located within a given vector format area.
+    * Downloads feature geometries based on class number and Syke's subcatchment identifiers.
+
+* **Documentation:** Added a tutorial on how to use the new features.
+
+
 Version 1.0.1
 ---------------
 
