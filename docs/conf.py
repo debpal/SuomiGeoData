@@ -1,6 +1,6 @@
 import os
 import sys
-# import sphinx_rtd_theme
+
 if os.path.abspath('..') in sys.path:
     pass
 else:

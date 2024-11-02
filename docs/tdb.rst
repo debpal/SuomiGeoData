@@ -36,7 +36,7 @@ for a better understanding of the names and class numbers of geometric features.
 
 .. code-block:: python
 
-    paituli.tdb_metadata_to_dataframe(
+    paituli.get_tdb_metadata(
         excel_file=r"C:\Users\Username\Folder\tdb_metadata.xlsx"
     )
     
@@ -60,9 +60,9 @@ Get the peatland drainage lines within the example area.
     )
     
     
-Peatland Drainage Lines Syke's Subcatchment Identifiers 
----------------------------------------------------------
-Get the peatland drainage lines within the example area.
+Peatland Drainage Lines by Syke's Subcatchment Identifiers 
+-------------------------------------------------------------
+Retrieve the peatland drainage lines within the specified subcatchment areas, as identified by Syke’s unique subcatchment identifiers.
 
 .. code-block:: python
     

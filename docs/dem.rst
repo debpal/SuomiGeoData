@@ -55,8 +55,8 @@ Get the clipped DEM for the example area.
 .. code-block:: python
     
     paituli.dem_clipped_download_by_area(
-        input_area=example_file,
-        output_file=r"C:\Users\Username\Folder\example_area.tif"
+        shape_file=example_file,
+        raster_file=r"C:\Users\Username\Folder\example_area.tif"
     )
 
     
@@ -73,8 +73,8 @@ Download the vector files of catchment divisions and obtain DEM data from the su
     
     # clipped DEM from the subcatchment identifier
     paituli.dem_clipped_download_by_syke_subcatchment(
-        input_file=r"C:\Users\Username\Folder\catchment_division_level_5.shp",
+        shape_file=r"C:\Users\Username\Folder\catchment_division_level_5.shp",
         level=5,
         id_subcatchments=[15730214505, 15730214514],
-        output_file=r"C:\Users\Username\Folder\syke_subcatchment_clipped_dem.tif"
+        raster_file=r"C:\Users\Username\Folder\syke_subcatchment_clipped_dem.tif"
     )

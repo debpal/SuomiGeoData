@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "SuomiGeoData"
-description = "Downloading and extracting geospatial data from Finland, that is Suomi."
+description = "Downloading and analyzing geospatial data from Finland, that is Suomi."
 authors = [
   { name="Debasish Pal", email="bestdebasish@gmail.com" },
 ]
@@ -34,9 +34,11 @@ dynamic = ["version"]
 keywords = [
 	"Paituli",
     "Syke",
+    "DEM",
 	"Topography",
-	"Data download",
-    "Data analysis"
+	"Data",
+    "Download",
+    "Analysis"
 ]
 
 
