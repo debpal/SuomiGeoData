@@ -47,6 +47,7 @@ A brief example of how to start:
 ```python
 >>> import SuomiGeoData
 >>> paituli = SuomiGeoData.Paituli()
+```
 
 ## Documentation
 
