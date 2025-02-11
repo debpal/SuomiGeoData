@@ -16,6 +16,7 @@ Digital Elevation Model (DEM)
 * Downloads DEM raster files based on label names from the index map.
 * Downloads raster files of all DEM labels intersecting with a given vector format area.
 * Downloads a clipped DEM raster file that matches a given vector format area.
+* Downloads clipped DEM raster files by `Syke's <https://www.syke.fi/en-US/Open_information/Spatial_datasets/Downloadable_spatial_dataset>`_ subcatchment identifiers.
         
 Topograhic Database
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -26,13 +27,6 @@ Topograhic Database
 * Downloads topographic database metadata containing the name and class number of the geometric features.
 * Extracts feature geometries based on class number from the shapefile folders.
 * Downloads feature geometries based on class number located within a given vector format area.
-    
-`SYKE integration <https://www.syke.fi/en-US/Open_information/Spatial_datasets/Downloadable_spatial_dataset>`_
------------------------------------------------------------------------------------------------------------------
+* Downloads feature geometries based on class number and `Syke's <https://www.syke.fi/en-US/Open_information/Spatial_datasets/Downloadable_spatial_dataset>`_ subcatchment identifiers.
 
-* Downloads CORINE land cover 2018 raster.
-* Downloads vector files of the latest subcatchment divisions, ranging from level 1 to 5.
-* Extracts individual or merged subcatchments by identifier number from the vector files.
-* Downloads clipped DEM raster files by subcatchment identifiers.
-* Downloads feature geometries based on class number and subcatchment identifiers.
     

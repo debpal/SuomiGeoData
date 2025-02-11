@@ -13,7 +13,6 @@ Let's start by instantiating the classes.
 
     import SuomiGeoData
     paituli = SuomiGeoData.Paituli()
-    syke = SuomiGeoData.Syke()
     
     
 Download by Labels
@@ -62,14 +61,9 @@ Get the clipped DEM for the example area.
     
 Clipped DEM from Syke's Subcatchment Identifiers
 --------------------------------------------------
-Download the vector files of catchment divisions and obtain DEM data from the subcatchment identifiers.
+Download the vector files of Syke's catchment divisions and obtain DEM data from the subcatchment identifiers.
 
 .. code-block:: python
-    
-    # download catchment divisions
-    syke.download_catchment_divisions_2023(
-        folder_path=r"C:\Users\Username\Folder"
-    )
     
     # clipped DEM from the subcatchment identifier
     paituli.dem_clipped_download_by_syke_subcatchment(

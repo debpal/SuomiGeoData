@@ -13,7 +13,6 @@ Let's start by instantiating the class.
 
     import SuomiGeoData
     paituli = SuomiGeoData.Paituli()
-    syke = SuomiGeoData.Syke()
 
 
 Download by Labels
@@ -65,11 +64,6 @@ Peatland Drainage Lines by Syke's Subcatchment Identifiers
 Retrieve the peatland drainage lines within the specified subcatchment areas, as identified by Syke’s unique subcatchment identifiers.
 
 .. code-block:: python
-    
-    # download catchment divisions
-    syke.download_catchment_divisions_2023(
-        folder_path=r"C:\Users\Username\Folderr"
-    )
     
     # peatland drainage lines from the subcatchment identifier
     paituli.tdb_feature_extraction_by_syke_subcatchment(

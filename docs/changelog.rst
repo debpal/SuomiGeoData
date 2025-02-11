@@ -8,14 +8,18 @@ Version 1.1.2
 
 * **Release date:** 11-Feb-2025.
 
-* **Compatibity:** Verified with Python 3.13.
+* **Bug fix:** Removed the :class:`SuomiGeoData.Syke` class to resolve the SSL certificate verification error.
+
+* **Compatibility:** Verified with Python 3.13.
+
+* **Development status:** Upgraded from Beta to Production/Stable.
 
 Version 1.1.1
 ---------------
 
 * **Release date:** 20-Oct-2024.
 
-* **Feature Additions:** 
+* **Feature additions:** 
 
     * Extracts feature geometries based on class number from the shapefile folders of topographic database labels.
     * Downloads feature geometries based on class number located within a given vector format area.
@@ -39,7 +43,7 @@ Version 1.0.0
 
 * **Release date:** 24-Sep-2024.
 
-* **Feature Additions:** 
+* **Feature additions:** 
 
     * Downloads all DEM labels intersected with a given vector format area.
     * Downloads clipped DEM data that matches a given vector format area.
@@ -57,7 +61,7 @@ Version 0.1.0
 
 * **Release date:** 17-Sep-2024.
 
-* **Feature Additions:** 
+* **Feature additions:** 
 
     * Access characteristics of the DEM index map.
     * Download selected labels as raster files from the DEM index map.

@@ -10,7 +10,6 @@ Welcome to SuomiGeoData's documentation!
    installation
    quickstart
    dem
-   landcover
    tdb
    modules
    changelog
