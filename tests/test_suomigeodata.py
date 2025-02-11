@@ -4,7 +4,6 @@ import os
 import tempfile
 import geopandas
 import shapely
-import rasterio
 import warnings
 
 
@@ -12,12 +11,6 @@ import warnings
 def paituli():
 
     yield SuomiGeoData.Paituli()
-
-
-@pytest.fixture(scope='class')
-def syke():
-
-    yield SuomiGeoData.Syke()
 
 
 @pytest.fixture(scope='class')
@@ -170,18 +163,6 @@ def test_tdb_labels_download_by_area(
         assert exc_info.value.args[0] == message['error_area']
 
 
-def test_download_corine_land_cover_2018(
-    syke,
-    message
-):
-
-    # pass test for downloading Syke's land cover map
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        assert len(os.listdir(tmp_dir)) == 0
-        assert syke.download_corine_land_cover_2018(tmp_dir) == message['download']
-        assert len(os.listdir(tmp_dir)) > 0
-
-
 def test_get_tdb_metadata(
     paituli,
     message
@@ -203,7 +184,6 @@ def test_get_tdb_metadata(
 
 def test_error_folder_driver(
     paituli,
-    syke,
     core,
     message
 ):
@@ -220,11 +200,11 @@ def test_error_folder_driver(
 
     # error test for invalid output shapefile path of Syke subcatchment selection
     with pytest.raises(Exception) as exc_info:
-        syke.select_subcatchments(
+        paituli.select_subcatchments_of_Syke(
             input_file='catchment_division_level_5.shp',
             level=5,
-            id_subcatchments=[15730214505],
-            output_file='select_subcatchments.sh'
+            id_subcatchments=[15730216003],
+            output_file='syke_subcatchments.sh'
         )
     assert exc_info.value.args[0] == message['error_driver']
 
@@ -262,74 +242,6 @@ def test_error_folder_driver(
                 shape_file=os.path.join(tmp_dir, 'shape.sh')
             )
         assert exc_info.value.args[0] == message['error_driver']
-
-    # error test for invalid folder path of Syke catchment download
-    with pytest.raises(Exception) as exc_info:
-        syke.download_catchment_divisions_2023(
-            folder_path=tmp_dir
-        )
-    assert exc_info.value.args[0] == message['error_folder']
-
-    # error test for invalid folder path of Syke land cover download
-    with pytest.raises(Exception) as exc_info:
-        syke.download_corine_land_cover_2018(tmp_dir)
-    assert exc_info.value.args[0] == message['error_folder']
-
-
-def test_clipped_download_by_syke_subcatchment(
-    paituli,
-    syke,
-    message
-):
-
-    # temporary directory
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        # pass test for downloading Syke's catchment divisions
-        assert syke.download_catchment_divisions_2023(tmp_dir) == message['download']
-        catchd5_path = os.path.join(tmp_dir, 'catchment_division_level_5.shp')
-        #########################
-        # Digital Elevation Model
-        #########################
-        # pass test for DEM clipped download by Syke subcatchments
-        raster_file = os.path.join(tmp_dir, 'clipped_dem_by_syke_subcatchment.tif')
-        assert paituli.dem_clipped_download_by_syke_subcatchment(
-            shape_file=catchd5_path,
-            level=5,
-            id_subcatchments=[15730214505, 15730214514],
-            raster_file=raster_file
-        ) == 'Raster clipping completed.'
-        with rasterio.open(raster_file) as tmp_raster:
-            assert tmp_raster.bounds.left == 582480.0
-            assert tmp_raster.bounds.right == 589690.0
-        # error test for Syke's invalid level subctachment divisions
-        with pytest.raises(Exception) as exc_info:
-            paituli.dem_clipped_download_by_syke_subcatchment(
-                shape_file=catchd5_path,
-                level=7,
-                id_subcatchments=[15730214505, 15730214514],
-                raster_file=raster_file
-            )
-        assert exc_info.value.args[0] == 'Input level must be one of 1, 2, 3, 4, or 5.'
-        # error test for Syke's invalid subcatchment ID(s)
-        with pytest.raises(Exception) as exc_info:
-            paituli.dem_clipped_download_by_syke_subcatchment(
-                shape_file=catchd5_path,
-                level=5,
-                id_subcatchments=[157302],
-                raster_file=raster_file
-            )
-        assert exc_info.value.args[0] == 'Selected ID(s) do not exist in the subcatchment divisions map.'
-        ######################
-        # Topographic Database
-        ######################
-        # pass test topographic database feature extraction by Syke's subcatchment ID(s)
-        assert paituli.tdb_feature_extraction_by_syke_subcatchment(
-            input_file=catchd5_path,
-            level=5,
-            id_subcatchments=[15730216003],
-            class_number=36311,
-            output_file=os.path.join(tmp_dir, 'clipped_feature_class.shp')
-        ) == 'Shape clipping completed.'
 
 
 def test_tdb_feature_extraction(
@@ -382,3 +294,65 @@ def test_tdb_feature_extraction(
                 shape_file=os.path.join(tmp_dir, 'output.shp')
             )
         assert exc_info.value.args[0] == 'No geometry is found in the downloaded files for the feature class number 38400.'
+
+
+def test_clipped_download_by_syke_subcatchment(
+    paituli,
+    message
+):
+
+    # temporary directory
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        # pass test for downloading Syke's catchment divisions
+        example_gdf = paituli.get_example_area
+        example_file = os.path.join(tmp_dir, 'example.shp')
+        example_gdf.to_file(example_file)
+        #########################
+        # Digital Elevation Model
+        #########################
+        # pass test for DEM clipped download by Syke subcatchments
+        raster_file = os.path.join(tmp_dir, 'clipped_dem_by_syke_subcatchment.tif')
+        assert paituli.dem_clipped_download_by_syke_subcatchment(
+            shape_file=example_file,
+            level=5,
+            id_subcatchments=[15730216003],
+            raster_file=raster_file
+        ) == 'Raster clipping completed.'
+        # error test for Syke's invalid level subctachment divisions
+        with pytest.raises(Exception) as exc_info:
+            paituli.dem_clipped_download_by_syke_subcatchment(
+                shape_file=example_file,
+                level=7,
+                id_subcatchments=[15730216003],
+                raster_file=raster_file
+            )
+        assert exc_info.value.args[0] == 'Input level must be one of 1, 2, 3, 4, or 5.'
+        # error test for Syke's invalid subcatchment ID(s)
+        with pytest.raises(Exception) as exc_info:
+            paituli.dem_clipped_download_by_syke_subcatchment(
+                shape_file=example_file,
+                level=5,
+                id_subcatchments=[157302],
+                raster_file=raster_file
+            )
+        assert exc_info.value.args[0] == 'Selected ID(s) do not exist in the subcatchment divisions map.'
+        ######################
+        # Topographic Database
+        ######################
+        # pass test topographic database feature extraction by Syke's subcatchment ID(s)
+        assert paituli.tdb_feature_extraction_by_syke_subcatchment(
+            input_file=example_file,
+            level=5,
+            id_subcatchments=[15730216003],
+            class_number=36311,
+            output_file=os.path.join(tmp_dir, 'clipped_feature_class.shp')
+        ) == 'Shape clipping completed.'
+
+
+def test_github_action(
+    core
+):
+
+    assert core._github_action(
+        integer=1
+    ) == '1'

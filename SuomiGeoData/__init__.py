@@ -1,10 +1,8 @@
 from .paituli import Paituli
-from .syke import Syke
 
 
 __all__ = [
-    'Paituli',
-    'Syke'
+    'Paituli'
 ]
 
 
