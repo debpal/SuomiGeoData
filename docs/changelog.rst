@@ -3,6 +3,13 @@ Release Notes
 ===============
 
 
+Version 1.1.2
+---------------
+
+* **Release date:** 11-Feb-2025.
+
+* **Compatibity:** Verified with Python 3.13.
+
 Version 1.1.1
 ---------------
 
