@@ -2,6 +2,14 @@
 Release Notes
 ===============
 
+Version 1.1.3
+---------------
+
+* **Release date:** 11-Feb-2025.
+
+* **Bug fix:** Removed the error from README.md.
+
+
 
 Version 1.1.2
 ---------------
