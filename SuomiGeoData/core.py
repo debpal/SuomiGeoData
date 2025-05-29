@@ -251,9 +251,11 @@ class Core:
                 )
                 # update clipped raster profile
                 profile.update(
-                    {'height': output_array.shape[1],
-                     'width': output_array.shape[2],
-                     'transform': output_transform}
+                    {
+                        'height': output_array.shape[1],
+                        'width': output_array.shape[2],
+                        'transform': output_transform
+                    }
                 )
                 # save the clipped raster
                 with rasterio.open(output_file, 'w', **profile) as output_raster:
